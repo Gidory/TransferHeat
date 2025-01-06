@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Симуляція</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="errorlog">
+        <div id="leavelog" class="txt">Return</div>
+        <div id="logger"></div>
+    </div>
+    <div id="room">
+        <!--обігрівач-->
+        <div id="heater"></div>
+        <!--Кімната-->
+        <!-- <div id="ballcontainer">
+             Шарики згенеровані через JS 
+        </div> -->
+    </div>
+    <h1>Моделювання процесу теплопровідності в межах кімнати</h1>
+    <div id="infopanel">
+        <h2>Панель керування</h2>
+        <h2>Інформація про кульку</h2>
+    <div id="sensor">N/S °C</div>
+    <h2>Інструменти</h2>
+    <div id="starter" class="txt">Запустити процес</div>
+    <p  class="txt">
+        Сила обігрівача<input type="text" id="hp" name="a" maxlength="2" value="Сила в °C" max=30 onfocus="if(this.value==this.defaultValue)this.value='';">°C
+     </p>
+     <div class="txt" id="openthelog">Logs</div>
+    </div>
+    <script src="changeables.js"></script>
+    <script src="functions.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
