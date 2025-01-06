@@ -4,6 +4,9 @@ function starstop(){
     forst++;
     if (forst%2==1){
         transferHeat();
+        setTimeout(function(){
+            tlos++;
+        }, 5000);
         starter.innerText="Зупинити процес";
         errors.push("The process was restarted/started");
         timestamps.push(Date.now());
@@ -30,16 +33,16 @@ if(forst%2==1){
     forst++;
     clearInterval(GHF);
     starter.innerText="Запустити процес";
-    errors.push("The process was stopped due to the changing of heater power.");
+    errors.push("The heater power change caused the operation to stop.");
     timestamps.push(Date.now());
     console.log(timestamps);
     console.log(errors);
 }
 }
 function constiintch(){
-    if(hp.value>20){
-        errors.push("You can`t set heater power over 20°C");
-        hp.value=0;
+    if(hp.value>5000){
+        errors.push("You can`t set heater power over 5000Вт");
+        hp.value=100;
         console.log(errors);
         timestamps.push(Date.now());
         console.log(timestamps);
@@ -48,7 +51,7 @@ function constiintch(){
         errors.push("Wrong value for heater power");
         timestamps.push(Date.now());
         console.log(timestamps);
-        hp.value=0;
+        hp.value=100;
         console.log(errors);
     }
 }
@@ -57,6 +60,9 @@ function logopened(){
         infop.style.display="none";
         room.style.display="none";
         errorlog.style.display="block";
+        if (forst%2==1){
+            starstop();
+        }
         let amounttodelete=errors.length-6;
         if(errors.length>6){
             for(let i = 0; i < amounttodelete; i++){

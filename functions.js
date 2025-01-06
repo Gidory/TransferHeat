@@ -25,7 +25,7 @@ function createthat() {
             // }
             ball.addEventListener("mouseover", hoveri);
             function hoveri(){
-                sensor.innerText = Math.round(ball.temperature, 2)+"°C";
+                sensor.innerText ="○ "+ Math.round(ball.temperature, 2)+"°C";
             }
             ball.temperature = 10; // Початкова температура
             balls.push(ball);
@@ -37,103 +37,129 @@ function createthat() {
             // }
         }
     }
-    for(let f = 0; f < sotwh+sotwl; f++){
+    for(let f = 0; f < ((sotwh+sotwl)*2)-2; f++){
         let square = document.createElement("div");
         square.className = "square";
         square.id = 's' + f + "0";
         square.style.top = -15+(15 * f) +"px";
         square.style.left = -15+"px";
-        if(f>=22){
+        if(f>=22&&f<53){
             square.style.top = -15 +"px";
             square.style.left = 15*(f-22)+"px";
+        }else if(f>=53&&f<74){
+            square.style.top = 15*(f-53) +"px";
+            square.style.left = 450+"px";
+        }else if(f>=74){
+            square.style.top = 300 +"px";
+            square.style.left = 15*(f-74)+"px";
         }
         room.appendChild(square);
         squares.push(square);
         square.temperature=0;
-        console.log("Я НАРодИвся");
+        square.totaltook = 0;
+        square.addEventListener("mouseover", hoveri12);
+            function hoveri12(){
+                sensor1.innerText = Math.round(square.totaltook, 2)+"°C";
+            }
+        console.log("Я НАРодИвся", square.id);
     }
 }
-
-// Функція передачі тепла
 function transferHeat() {
+    let k_ball = 1; // Коефіцієнт теплопровідності для кульок
+    let maxTemperature = 30; // Максимальна температура для кульок
+
     for (let ball of balls) {
-        ball.newTemperature = ball.temperature;
-        ball.blockedBalls = {}; // Додавання властивості для блокування
+        ball.newTemperature = ball.temperature; // Початкова температура
+        ball.blockedBalls = {}; // Блокування передачі тепла
+        ball.blockedSquares = {};
     }
+
     heater1 = heater.getBoundingClientRect();
+    heater20 = heater2.getBoundingClientRect();
 
     GHF = setInterval(() => {
-        let currentTime = Date.now(); // Поточний час, зь 1 січня 1970 року
+        let currentTime = Date.now();
 
         for (let ball of balls) {
             let ballRect = ball.getBoundingClientRect();
-            let distanceToHeater = Math.sqrt(
-                Math.pow(ballRect.x - heater1.x, 2) +
-                Math.pow(ballRect.y - heater1.y, 2)
-            );
-            heaterPower = hp.value;
-            if (isNaN(heaterPower)) {
-                heaterPower = 0;
-            }
-            if (heaterPower < 0) {
-                heaterPower = 0;
-            }
-            if(hp.value == ""){
-                hp.value=0;
-                heaterPower=0;
-                errors.push("Value for heater power wasn`t set. Heater power was set to 0");
-                timestamps.push(Date.now());
-                console.log(timestamps);
-                console.log(errors);
-            }
-            hp.value = heaterPower;
 
-            // Тепло від обігрівача
-            if (heaterPower > 0) {
-                if (distanceToHeater < heatTransferDistance&&ball.newTemperature<=30) {
-                    let heatTransferAmount = heaterPower / 2;
-                    ball.newTemperature = Math.min(ball.temperature + heatTransferAmount, 30);
-                    checktransfer+=heatTransferAmount;
-                    console.log("checktransfer", checktransfer);
+            // Тепло від обігрівачів
+            for (let heater of [heater1, heater20]) {
+                let distanceToHeater = Math.sqrt(
+                    Math.pow(ballRect.x - heater.x, 2) +
+                    Math.pow(ballRect.y - heater.y, 2)
+                );
+
+                if (distanceToHeater < heaterTransferDistance) {
+                    let heatTransferAmount = heaterPower / Math.max(1, distanceToHeater); // Враховуємо відстань
+                    ball.newTemperature = Math.min(ball.temperature + heatTransferAmount, maxTemperature);
                 }
             }
 
             // Тепло між кульками
             for (let otherBall of balls) {
-                if (otherBall !== ball) {
-                    let otherBallRect = otherBall.getBoundingClientRect();
-                    let distanceToOtherBall = Math.sqrt(
-                        Math.pow(ballRect.x - otherBallRect.x, 2) +
-                        Math.pow(ballRect.y - otherBallRect.y, 2)
-                    );
+                if (otherBall === ball) continue;
 
-                    if (distanceToOtherBall < heatTransferDistance) {
-                        //Перевірка на блокування
-                        if (!ball.blockedBalls[otherBall.id] || currentTime > ball.blockedBalls[otherBall.id]) {
-                            let heatTransferAmount = 1.5;
-                            let transferableHeat = Math.min(ball.newTemperature - 15, heatTransferAmount); // Доступне тепло до передачі
-                            if (transferableHeat > 0) {
-                                let actualTransfer = Math.min(transferableHeat, 30 - otherBall.newTemperature); // Максимальна кількість тепла яку може отримати otherBall;
-                                ball.newTemperature -= actualTransfer;
-                                otherBall.newTemperature += actualTransfer;
-                    
-                                //Блокування 
-                                ball.blockedBalls[otherBall.id] = currentTime + 900; 
-                                otherBall.blockedBalls[ball.id] = currentTime + 900;
-                            }
+                let otherBallRect = otherBall.getBoundingClientRect();
+                let distanceToOtherBall = Math.sqrt(
+                    Math.pow(ballRect.x - otherBallRect.x, 2) +
+                    Math.pow(ballRect.y - otherBallRect.y, 2)
+                );
+
+                if (distanceToOtherBall < heatTransferDistance) {
+                    if (!ball.blockedBalls[otherBall.id] || currentTime > ball.blockedBalls[otherBall.id]) {
+                        let deltaT = ball.temperature - otherBall.temperature;
+                        let heatTransferAmount = k_ball * deltaT / Math.max(1, distanceToOtherBall);
+
+                        if (heatTransferAmount > 0) {
+                            heatTransferAmount = Math.min(heatTransferAmount, maxTemperature - otherBall.newTemperature);
+                            ball.newTemperature -= heatTransferAmount;
+                            otherBall.newTemperature += heatTransferAmount;
+
+                            ball.blockedBalls[otherBall.id] = currentTime + 300;
+                            otherBall.blockedBalls[ball.id] = currentTime + 300;
+                        }
+                    }
+                }
+            }
+
+            // Тепло до стін
+            for (let square of squares) {
+                if (!square.id) continue;
+
+                let squareRect = square.getBoundingClientRect();
+                let distanceToWall = Math.sqrt(
+                    Math.pow(ballRect.x - squareRect.x, 2) +
+                    Math.pow(ballRect.y - squareRect.y, 2)
+                );
+
+                if (distanceToWall < heatTransferDistance) {
+                    if (!ball.blockedSquares[square.id] || currentTime > ball.blockedSquares[square.id]) {
+                        let deltaT = ball.temperature - square.temperature;
+                        let heatTransferAmount = square.thermalConductivity * deltaT / Math.max(1, distanceToWall);
+
+                        if (heatTransferAmount > 0) {
+                            ball.newTemperature -= heatTransferAmount;
+                            square.temperature += heatTransferAmount;
+                            square.totaltook += heatTransferAmount;
+
+                            ball.blockedSquares[square.id] = currentTime + 900;
                         }
                     }
                 }
             }
         }
 
-        // Оновлення температур і кольорів
+        // Оновлення температур кульок
         for (let ball of balls) {
             ball.temperature = ball.newTemperature;
             color(ball, ball.temperature);
         }
+
+        // Оновлення кольорів стін
     }, 100); // Інтервал оновлення
 }
+
 function color(obj,temperature){
     //console.log('color obj', obj)
     //console.log('color temperature', temperature)

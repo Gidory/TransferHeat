@@ -26,7 +26,15 @@ body {
     position: absolute;
     bottom: 285px;
     left: 175px;
-    width: 150px;
+    width: 75px;
+    height: 20px;
+    background-color: cyan;
+}
+#heater2{
+    position: absolute;
+    bottom: 285px;
+    left: 250px;
+    width: 75px;
     height: 20px;
     background-color: cyan;
 }
@@ -54,7 +62,7 @@ h1{
     position: relative;
     border: #333;
     height: 30px;
-    width: 90px;
+    width: 150px;
     font-size: 30px;
     background-color: #ddd;
     border: 3px solid #aaa;
@@ -130,4 +138,13 @@ h1{
     height: 15px;
     background-color: red;
     transition: background-color 0.5s;
+}
+#sensor1{
+    position: relative;
+    border: #333;
+    height: 30px;
+    width: 150px;
+    font-size: 30px;
+    background-color: #ddd;
+    border: 3px solid #aaa;
 }
