@@ -41,7 +41,7 @@ if(forst%2==1){
 }
 function constiintch(){
     if(hp.value>5000){
-        errors.push("You can`t set heater power over 5000Вт");
+        errors.push("You cant set heater power over 5000Вт");
         hp.value=100;
         console.log(errors);
         timestamps.push(Date.now());
@@ -165,4 +165,4 @@ function RETURNTOZERO(){
         room.style.display="block";
         errorlog.style.display="none";
         
-}
+} 

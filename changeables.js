@@ -1,13 +1,15 @@
 // Значення
 let numBalls = 400; // Кількість шариків
-let heaterPower = 1000; // Сила обігрівача
+const ppM = 150; // Пікселі в мктрах
+// Потужність обігрівача у Вт
+let heaterPower = 0; // Потужність обігрівача
+const maxHeaterTemperature = 50; //Максимальна температура яку може видати обігрівач
 let balls = [];                                                                                                                
 let ballContainer = document.querySelector("#ballcontainer");                                                     
-let heater = document.querySelector("#heater");
-let heater2 = document.querySelector("#heater2");
+let heater1 = document.querySelector("#heater");
 const heatTransferDistance = 30; // Максимальна відстань для передачі тепла
 const heaterTransferDistance = 50;
-let cooldewn=1000;
+let cooldewn = 1000;
 let d=0;
 let sensor = document.querySelector("#sensor");
 let sensor1 = document.querySelector("#sensor1");
@@ -16,10 +18,9 @@ let starter = document.querySelector("#starter");
 let forst = 0;
 let funint = 0;
 let alreadyon = 0;
-//Змінні, за допомгою яких можна зупинити або розпочати якісь інтервали(2){
+//Змінні, за допомгою яких можна зупинити або розпочати якісь інтервали(1){
 let GHF;
-let DHF;
-//Змінні, за допомгою яких можна зупинити або розпочати якісь інтервали(2)}
+//Змінні, за допомгою яких можна зупинити або розпочати якісь інтервали(1)}
 let hp= document.querySelector("#hp");
 let checktransfer = 0;
 let openthelog = document.querySelector("#openthelog");
@@ -33,3 +34,4 @@ let timestamps = [];
 let limiter = 0;
 let squares = [];
 let tlos = 0;
+let ind = 1;

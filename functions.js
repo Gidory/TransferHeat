@@ -18,6 +18,7 @@ function createthat() {
             ball.style.left = 10 * i + 5 * i + "px";
             ball.style.top = j * 15 + "px";
             console.log('j ', j ,'i ', i)
+            ball.checktrasnsfer = 0;
             //let yeah = 10 * i + 5 * i;
             // if (yeah > 300) {
             //     ball.style.left = (10 * i + 5 * i) - 300 + "px";
@@ -33,7 +34,7 @@ function createthat() {
             // function updateBallColors() {
             //     const redIntensity = Math.floor((ball.temperature - 10) / 20 * 255);
             //     const blueIntensity = 255 - redIntensity;
-            //     ball.style.backgroundColor = `rgb(${redIntensity}, 0, ${blueIntensity}`;
+            //     ball.style.backgroundColor = rgb(${redIntensity}, 0, ${blueIntensity};
             // }
         }
     }
@@ -57,6 +58,7 @@ function createthat() {
         squares.push(square);
         square.temperature=0;
         square.totaltook = 0;
+        square.thermalConductivity = 1;
         square.addEventListener("mouseover", hoveri12);
             function hoveri12(){
                 sensor1.innerText = Math.round(square.totaltook, 2)+"°C";
@@ -65,7 +67,7 @@ function createthat() {
     }
 }
 function transferHeat() {
-    let k_ball = 1; // Коефіцієнт теплопровідності для кульок
+    let k_ball = 0.6; // Коефіцієнт теплопровідності для кульок
     let maxTemperature = 30; // Максимальна температура для кульок
 
     for (let ball of balls) {
@@ -73,9 +75,7 @@ function transferHeat() {
         ball.blockedBalls = {}; // Блокування передачі тепла
         ball.blockedSquares = {};
     }
-
-    heater1 = heater.getBoundingClientRect();
-    heater20 = heater2.getBoundingClientRect();
+    heaterPower = hp.value;
 
     GHF = setInterval(() => {
         let currentTime = Date.now();
@@ -84,17 +84,10 @@ function transferHeat() {
             let ballRect = ball.getBoundingClientRect();
 
             // Тепло від обігрівачів
-            for (let heater of [heater1, heater20]) {
-                let distanceToHeater = Math.sqrt(
-                    Math.pow(ballRect.x - heater.x, 2) +
-                    Math.pow(ballRect.y - heater.y, 2)
-                );
-
-                if (distanceToHeater < heaterTransferDistance) {
-                    let heatTransferAmount = heaterPower / Math.max(1, distanceToHeater); // Враховуємо відстань
-                    ball.newTemperature = Math.min(ball.temperature + heatTransferAmount, maxTemperature);
-                }
-            }
+            // Тепло від обігрівачів
+                let heaterPower = parseFloat(hp.value) || 0;
+                let heat = heatFromHeater(heater1, ball, heaterPower);
+                ball.newTemperature = Math.min(ball.newTemperature + heat, maxTemperature);
 
             // Тепло між кульками
             for (let otherBall of balls) {
@@ -108,14 +101,22 @@ function transferHeat() {
 
                 if (distanceToOtherBall < heatTransferDistance) {
                     if (!ball.blockedBalls[otherBall.id] || currentTime > ball.blockedBalls[otherBall.id]) {
-                        let deltaT = ball.temperature - otherBall.temperature;
-                        let heatTransferAmount = k_ball * deltaT / Math.max(1, distanceToOtherBall);
+                        let dT = ball.temperature - otherBall.temperature;
+                        console.log(dT);
+                        console.log(distanceToOtherBall/ppM);
+                        let heatTransferAmount = k_ball * dT / Math.max(1, (distanceToOtherBall));
+                        if (heatTransferAmount>5){
+                            heatTransferAmount = 5;
+                        }
 
                         if (heatTransferAmount > 0) {
                             heatTransferAmount = Math.min(heatTransferAmount, maxTemperature - otherBall.newTemperature);
+                            heatTransferAmount = Math.round(heatTransferAmount, 2);
                             ball.newTemperature -= heatTransferAmount;
                             otherBall.newTemperature += heatTransferAmount;
-
+                            ball.checktrasnsfer += heatTransferAmount;
+                            console.log(ball.checktrasnsfer);
+                            console.log('hta', heatTransferAmount, ball.id);
                             ball.blockedBalls[otherBall.id] = currentTime + 300;
                             otherBall.blockedBalls[ball.id] = currentTime + 300;
                         }
@@ -135,13 +136,12 @@ function transferHeat() {
 
                 if (distanceToWall < heatTransferDistance) {
                     if (!ball.blockedSquares[square.id] || currentTime > ball.blockedSquares[square.id]) {
-                        let deltaT = ball.temperature - square.temperature;
-                        let heatTransferAmount = square.thermalConductivity * deltaT / Math.max(1, distanceToWall);
-
-                        if (heatTransferAmount > 0) {
-                            ball.newTemperature -= heatTransferAmount;
-                            square.temperature += heatTransferAmount;
-                            square.totaltook += heatTransferAmount;
+                        let heatTransferAmount = square.thermalConductivity * 1.5 / Math.max(1, distanceToWall/150);
+                        let actualtnsferr = Math.min(ball.newTemperature - 10, heatTransferAmount); 
+                        if (heatTransferAmount > 0&&ball.newTemperature>10) {
+                            ball.newTemperature -= actualtnsferr;
+                            square.temperature += actualtnsferr;
+                            square.totaltook += actualtnsferr;
 
                             ball.blockedSquares[square.id] = currentTime + 900;
                         }
@@ -169,14 +169,20 @@ function color(obj,temperature){
      //console.log('blueIntensity ', blueIntensity)
      obj.style.backgroundColor = `rgb(${redIntensity}, 0, ${blueIntensity})`;
 }
-
-// Функція для оновлення кольорів кульок
-
-// Запуск симуляції // Створюємо кульки
-
-// let hmimtrbthta = heatTransferAmount - maxtempreduced;
-// let maxtempreduced = ball.newTemperature - 10;
-// if (heatTransferAmount<maxtempreduced){
-// ball.newTemperature -= heatTransferAmount;
-// otherBall.newTemperature = Math.min(otherBall.newTemperature + heatTransferAmount, 30);
-// }else if(heatTransferAmount>maxtempreduced){
+function heatFromHeater(heater, ball, heaterPower) {
+    let multiplier = 0.005; 
+    let Powah = multiplier * heaterPower;
+    let minTemperatureFactor = 0.1;
+    let maxDistanceFactor = 10; 
+    let maxDistance = maxDistanceFactor * Math.sqrt(heaterPower/5);
+    let ballRect = ball.getBoundingClientRect();
+    let heaterRect = heater.getBoundingClientRect();
+    let distance = Math.sqrt(
+        Math.pow(ballRect.x - heaterRect.x, 2) +
+        Math.pow(ballRect.y - heaterRect.y, 2)
+    );
+    if (distance > maxDistance) return 0;
+    let heatFactor = 1 - (distance / maxDistance); 
+    let temperature = Powah * heatFactor;
+    return Math.max(temperature, minTemperatureFactor * Powah);
+}

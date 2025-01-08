@@ -28,7 +28,8 @@ body {
     left: 175px;
     width: 75px;
     height: 20px;
-    background-color: cyan;
+    background-image: url(image.png);
+    background-size: 100% 100%;
 }
 #heater2{
     position: absolute;
@@ -36,7 +37,8 @@ body {
     left: 250px;
     width: 75px;
     height: 20px;
-    background-color: cyan;
+    background-image: url(image.png);
+    background-size: 100% 100%;
 }
 
 /* #ballcontainer {
