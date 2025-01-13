@@ -85,40 +85,46 @@ function transferHeat() {
 
             // Тепло від обігрівачів
             // Тепло від обігрівачів
+            let heaterPowercheck = hp.value;
+            if (isNaN(heaterPowercheck)) {
+                hp.value = 100;
+            }
+            if (heaterPowercheck < 0) {
+                hp.value = 100;
+            }
+            if(hp.value == ""){
+                hp.value=100;
+                errors.push("Value for heater power wasn`t set. Heater power was set to 100 Вт");
+                timestamps.push(Date.now());
+                console.log(timestamps);
+                console.log(errors);
+            }
                 let heaterPower = parseFloat(hp.value) || 0;
                 let heat = heatFromHeater(heater1, ball, heaterPower);
                 ball.newTemperature = Math.min(ball.newTemperature + heat, maxTemperature);
 
             // Тепло між кульками
             for (let otherBall of balls) {
-                if (otherBall === ball) continue;
-
-                let otherBallRect = otherBall.getBoundingClientRect();
-                let distanceToOtherBall = Math.sqrt(
-                    Math.pow(ballRect.x - otherBallRect.x, 2) +
-                    Math.pow(ballRect.y - otherBallRect.y, 2)
-                );
-
-                if (distanceToOtherBall < heatTransferDistance) {
-                    if (!ball.blockedBalls[otherBall.id] || currentTime > ball.blockedBalls[otherBall.id]) {
-                        let dT = ball.temperature - otherBall.temperature;
-                        console.log(dT);
-                        console.log(distanceToOtherBall/ppM);
-                        let heatTransferAmount = k_ball * dT / Math.max(1, (distanceToOtherBall));
-                        if (heatTransferAmount>5){
-                            heatTransferAmount = 5;
-                        }
-
-                        if (heatTransferAmount > 0) {
-                            heatTransferAmount = Math.min(heatTransferAmount, maxTemperature - otherBall.newTemperature);
-                            heatTransferAmount = Math.round(heatTransferAmount, 2);
-                            ball.newTemperature -= heatTransferAmount;
-                            otherBall.newTemperature += heatTransferAmount;
-                            ball.checktrasnsfer += heatTransferAmount;
-                            console.log(ball.checktrasnsfer);
-                            console.log('hta', heatTransferAmount, ball.id);
-                            ball.blockedBalls[otherBall.id] = currentTime + 300;
-                            otherBall.blockedBalls[ball.id] = currentTime + 300;
+                if (otherBall !== ball) {
+                    let otherBallRect = otherBall.getBoundingClientRect();
+                    let distanceToOtherBall = Math.sqrt(
+                        Math.pow(ballRect.x - otherBallRect.x, 2) +
+                        Math.pow(ballRect.y - otherBallRect.y, 2)
+                    );
+                    if (distanceToOtherBall < heatTransferDistance) {
+                        //Перевірка на блокування
+                        if (!ball.blockedBalls[otherBall.id] || currentTime > ball.blockedBalls[otherBall.id]) {
+                            let heatTransferAmount = 1.5;
+                            let transferableHeat = Math.min(ball.newTemperature - 15, heatTransferAmount); // Доступне тепло до передачі
+                            if (transferableHeat > 0) {
+                                let actualTransfer = Math.min(transferableHeat, 30 - otherBall.newTemperature); // Максимальна кількість тепла яку може отримати otherBall;
+                                ball.newTemperature -= actualTransfer;
+                                otherBall.newTemperature += actualTransfer;
+                    
+                                //Блокування 
+                                ball.blockedBalls[otherBall.id] = currentTime + 900; 
+                                otherBall.blockedBalls[ball.id] = currentTime + 900;
+                            }
                         }
                     }
                 }
