@@ -28,6 +28,14 @@ let NBA = 0;
 let errorlog = document.querySelector("#errorlog");
 let room = document.querySelector("#room");
 let returntozero = document.querySelector("#leavelog");
+if (returntozero) {
+    returntozero.addEventListener("click", () => {
+        // Логіка повернення
+        document.querySelector("#errorlog").style.display = "none";
+        document.querySelector("#room").style.display = "block";
+        document.querySelector("#infopanel").style.display = "block";
+    });
+}
 let logger = document.querySelector("#logger");
 let errors = [];
 let timestamps = [];
