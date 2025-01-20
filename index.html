@@ -11,6 +11,11 @@
         <div id="leavelog" class="txt">Return</div>
         <div id="logger"></div>
     </div>
+    <div id="toolbox">
+        <div id="wallsOff" class="txt">Вимкнути тепловтрату стін</div>
+        <div id="heaterOff" class="txt">Вимкнути обігрівача</div>
+        <div id="leavelog1" class="txt">Return</div>
+    </div>
     <div id="room">
         <!--обігрівач-->
         <div id="heater"></div>
@@ -29,9 +34,12 @@
     <div id="sensor1">N/S °C</div>
     <h2>Інструменти</h2>
     <div id="starter" class="txt">Запустити процес</div>
-    <p  class="txt">
-        Сила обігрівача<input type="text" id="hp" name="a" maxlength="4" value="Сила в Вт" max=9999 onfocus="if(this.value==this.defaultValue)this.value='';">Вт
-     </p>
+        <!-- Сила обігрівача<input type="text" id="hp" name="a" maxlength="4" value="Сила в Вт" max=9999 onfocus="if(this.value==this.defaultValue)this.value='';">Вт -->
+         <div id="cont05">
+         Сила обігрівача<input type="range" id="hp" name="a" min="0" max="5000" step="10" value="100">
+         <h2 id="heatnumber"> N/A Вт</h1>
+         </div>
+    <div class="txt" id="toolbag">Налаштування симуляції</div>
      <div class="txt" id="openthelog">Logs</div>
     </div>
     <script src="changeables.js"></script>

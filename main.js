@@ -160,9 +160,19 @@ function logopened(){
         
 }
 returntozero.addEventListener("click", RETURNTOZERO);
+returntozero1.addEventListener("click", RETURNTOZERO);
 function RETURNTOZERO(){
-        infop.style.display="block";
+        infop.style.display="flex";
         room.style.display="block";
         errorlog.style.display="none";
+        toolbox.style.display = "none";
         
-} 
+}
+tb.addEventListener("click", function(){
+    toolbox.style.display="flex";
+    infop.style.display="none";
+
+});
+setInterval(function(){
+ heatnumber.innerText = hp.value + "Вт";
+}, 10)

@@ -28,14 +28,7 @@ let NBA = 0;
 let errorlog = document.querySelector("#errorlog");
 let room = document.querySelector("#room");
 let returntozero = document.querySelector("#leavelog");
-if (returntozero) {
-    returntozero.addEventListener("click", () => {
-        // Логіка повернення
-        document.querySelector("#errorlog").style.display = "none";
-        document.querySelector("#room").style.display = "block";
-        document.querySelector("#infopanel").style.display = "block";
-    });
-}
+let returntozero1 = document.querySelector("#leavelog1");
 let logger = document.querySelector("#logger");
 let errors = [];
 let timestamps = [];
@@ -43,3 +36,11 @@ let limiter = 0;
 let squares = [];
 let tlos = 0;
 let ind = 1;
+let heatnumber = document.querySelector("#heatnumber");
+let blocked = false;
+let heateroff = false;
+let tb = document.querySelector("#toolbag");
+let wallsOff = document.querySelector("#wallsOff");
+let heaterOff = document.querySelector("#heaterOff");
+let helper1 = 0;
+let helper2 = 0;

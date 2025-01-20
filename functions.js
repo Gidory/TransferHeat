@@ -85,6 +85,7 @@ function transferHeat() {
 
             // Тепло від обігрівачів
             // Тепло від обігрівачів
+            if(heateroff==false){
             let heaterPowercheck = hp.value;
             if (isNaN(heaterPowercheck)) {
                 hp.value = 100;
@@ -102,7 +103,7 @@ function transferHeat() {
                 let heaterPower = parseFloat(hp.value) || 0;
                 let heat = heatFromHeater(heater1, ball, heaterPower);
                 ball.newTemperature = Math.min(ball.newTemperature + heat, maxTemperature);
-
+        }
             // Тепло між кульками
             for (let otherBall of balls) {
                 if (otherBall !== ball) {
@@ -131,6 +132,7 @@ function transferHeat() {
             }
 
             // Тепло до стін
+            if(blocked==false){
             for (let square of squares) {
                 if (!square.id) continue;
 
@@ -149,11 +151,12 @@ function transferHeat() {
                             square.temperature += actualtnsferr;
                             square.totaltook += actualtnsferr;
 
-                            ball.blockedSquares[square.id] = currentTime + 900;
+                            ball.blockedSquares[square.id] = currentTime + 1800;
                         }
                     }
                 }
             }
+        }
         }
 
         // Оновлення температур кульок
@@ -191,4 +194,32 @@ function heatFromHeater(heater, ball, heaterPower) {
     let heatFactor = 1 - (distance / maxDistance); 
     let temperature = Powah * heatFactor;
     return Math.max(temperature, minTemperatureFactor * Powah);
+}
+heaterOff.addEventListener("click", turnedoff1);
+function turnedoff1(){
+    helper1++;
+    if (helper1%2==1){
+        heaterOff.innerText="Увімкнути обігрівача";
+        errors.push("Turned off the heater");
+        heateroff = true;
+        }
+    if(helper1%2==0){
+        heateroff = false;
+        heaterOff.innerText="Вимкнути обігрівача";
+        errors.push("Turned on the heater");
+    }
+}
+wallsOff.addEventListener("click", turnedoff2);
+function turnedoff2(){
+    helper2++;
+    if (helper2%2==1){
+        wallsOff.innerText="Увімкнути тепловтрату стін";
+        errors.push("Turned off the heat loss");
+        blocked = true;
+        }
+    if(helper2%2==0){
+        blocked = false;
+        heaterOff.innerText="Вимкнути тепловтрату стін";
+        errors.push("Turned on the heat loss");
+    }
 }
