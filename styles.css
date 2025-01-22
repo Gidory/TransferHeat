@@ -91,7 +91,11 @@ h2 {
     color: #555;
     margin-bottom: 10px;
 }
-
+.dis{
+    font-family: 'Comic Sans Ms';
+    font-weight: bold;
+    font-style: italic;
+}
 /* Кнопки */
 .txt {
     display: inline-block;
@@ -153,7 +157,7 @@ h2 {
     /* display: none; */
     flex-direction: column;
     display: none;
-    width: 450px;
+    width: 600px;
     max-width: 600px;
     height: 200px;
     background-color: #fff;
@@ -233,6 +237,7 @@ h2 {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
+    height: 150px;
     font-size: 1rem;
     font-family: 'Arial', sans-serif;
     border: 2px solid #ccc;
@@ -242,4 +247,36 @@ h2 {
 }
 #heatnumber{
     user-select: none;
+}
+.tbitems{
+    width: 300px;
+}
+#cont06{
+    position: absolute;
+    left: 320px;
+    width: 250px;
+    padding: 10px;
+    margin-top: 10px;
+    height: 150px;
+    font-size: 1rem;
+    font-family: 'Arial', sans-serif;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+}
+#bc {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-family: 'Arial', sans-serif;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s;
+}
+#bc:focus {
+    border-color: #74ebd5;
+    outline: none;
 }

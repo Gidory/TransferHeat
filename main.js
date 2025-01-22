@@ -1,5 +1,5 @@
-createthat();
-starter.addEventListener("click", starstop);
+createthat(600); // by default
+starter.addEventListener("click", starstop); //start of the simulation function
 function starstop(){
     forst++;
     if (forst%2==1){
@@ -23,13 +23,13 @@ function starstop(){
         console.log(errors);
     }
     }
-hp.addEventListener('click', startthis);
+hp.addEventListener('click', startthis); //start checking the values 
 function startthis(){
 if (limiter == 0) {
 setInterval(constiintch, 1);
 limiter++;
 }
-if(forst%2==1){
+if(forst%2==1){ //stopping the function if value is changed to prevent errors
     forst++;
     clearInterval(GHF);
     starter.innerText="Запустити процес";
@@ -39,7 +39,19 @@ if(forst%2==1){
     console.log(errors);
 }
 }
-function constiintch(){
+bc.addEventListener('click', stopthis); //start checking the values 
+function stopthis(){
+if(forst%2==1){ //stopping the function if value is changed to prevent errors
+    forst++;
+    clearInterval(GHF);
+    starter.innerText="Запустити процес";
+    errors.push("The ball count change caused the operation to stop.");
+    timestamps.push(Date.now());
+    console.log(timestamps);
+    console.log(errors);
+}
+}
+function constiintch(){  //checking hp value for any unpredicted values
     if(hp.value>5000){
         errors.push("You cant set heater power over 5000Вт");
         hp.value=100;
@@ -55,7 +67,7 @@ function constiintch(){
         console.log(errors);
     }
 }
-openthelog.addEventListener("click", logopened);
+openthelog.addEventListener("click", logopened); //open the log
 function logopened(){
         infop.style.display="none";
         room.style.display="none";
@@ -159,8 +171,8 @@ function logopened(){
         }
         
 }
-returntozero.addEventListener("click", RETURNTOZERO);
-returntozero1.addEventListener("click", RETURNTOZERO);
+returntozero.addEventListener("click", RETURNTOZERO); //close the logs or setting of the simulation
+returntozero1.addEventListener("click", RETURNTOZERO); //the same
 function RETURNTOZERO(){
         infop.style.display="flex";
         room.style.display="block";
@@ -168,11 +180,12 @@ function RETURNTOZERO(){
         toolbox.style.display = "none";
         
 }
-tb.addEventListener("click", function(){
+tb.addEventListener("click", function(){ //open the setting
     toolbox.style.display="flex";
     infop.style.display="none";
 
 });
 setInterval(function(){
  heatnumber.innerText = hp.value + "Вт";
+ ballcount.innerText = bc.value + " шариків"
 }, 10)

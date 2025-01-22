@@ -1,43 +1,51 @@
 // Функція для створення кульок
-function createthat() {
-    let rows=300/15;
-    let columns=450/15;
-    sotwh = 330/15; 
-    sotwl = 465/15;
+function createthat(ballCount) {
+    let roomW = 450; // Ширина блока
+    let roomH = 300; // Висота блока 
+    let vidst = 5; // Відстань між шариками в пкс
+    sotwh = 330/15; // незмінне значення для створення стін
+    sotwl = 465/15; // незмінне значення для створення стін
     console.log(sotwh);
-    console.log(rows);
-    console.log(columns);
-    for (j = 0; j < rows; j++) {
-        for (let i = 0; i < columns; i++) {
+    // Розрахунок кількості рядків і стовпців
+    let rows = Math.sqrt((roomH / roomW) * ballCount);
+    let columns = ballCount / rows;
+
+    // Розмір шарика з урахуванням відстані
+    let ballSize = Math.min(
+        (roomW - vidst * (Math.floor(columns) - 1)) / Math.floor(columns),
+        (roomH - vidst * (Math.floor(rows) - 1)) / Math.floor(rows)
+    );
+
+    // Очищення попередніх шариків
+    balls.forEach(ball => ball.remove());
+    balls = [];
+
+    // Створення шариків
+    for (let row = 0; row < Math.floor(rows); row++) {
+        for (let col = 0; col < Math.floor(columns); col++) {
             let ball = document.createElement("div");
             ball.className = "ball";
-            ball.id = 'h' + j + "0"+ i;
 
-            // Встановлення початкової позиції для всіх кульок
-            // Встановлення температури
-            ball.style.left = 10 * i + 5 * i + "px";
-            ball.style.top = j * 15 + "px";
-            console.log('j ', j ,'i ', i)
-            ball.checktrasnsfer = 0;
-            //let yeah = 10 * i + 5 * i;
-            // if (yeah > 300) {
-            //     ball.style.left = (10 * i + 5 * i) - 300 + "px";
-            //     ball.style.top = j + "px";
-            // }
-            ball.addEventListener("mouseover", hoveri);
-            function hoveri(){
-                sensor.innerText ="○ "+ Math.round(ball.temperature, 2)+"°C";
-            }
-            ball.temperature = 10; // Початкова температура
+            // Розташування шарика
+            ball.style.width = `${ballSize}px`;
+            ball.style.height = `${ballSize}px`;
+            ball.style.left = `${col * (ballSize + vidst)}px`;
+            ball.style.top = `${row * (ballSize + vidst)}px`;
+
+            // Початкова температура
+            ball.temperature = 10;
+
+            // Обробник наведення миші
+            ball.addEventListener("mouseover", () => {
+                sensor.innerText = `○ ${Math.round(ball.temperature)}°C`;
+            });
+
+            // Додавання до кімнати
             balls.push(ball);
             room.appendChild(ball);
-            // function updateBallColors() {
-            //     const redIntensity = Math.floor((ball.temperature - 10) / 20 * 255);
-            //     const blueIntensity = 255 - redIntensity;
-            //     ball.style.backgroundColor = rgb(${redIntensity}, 0, ${blueIntensity};
-            // }
         }
     }
+
     for(let f = 0; f < ((sotwh+sotwl)*2)-2; f++){
         let square = document.createElement("div");
         square.className = "square";
@@ -227,3 +235,15 @@ function turnedoff2(){
         timestamps.push(Date.now());
     }
 }
+bc.addEventListener('input', function(){
+    if(forst%2==1){ //stopping the function if value is changed to prevent errors
+        forst++;
+        clearInterval(GHF);
+        starter.innerText="Запустити процес";
+        errors.push("The ball count change caused the operation to stop.");
+        timestamps.push(Date.now());
+        console.log(timestamps);
+        console.log(errors);
+    }
+    createthat(bc.value);
+});

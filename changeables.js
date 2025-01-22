@@ -44,3 +44,6 @@ let wallsOff = document.querySelector("#wallsOff");
 let heaterOff = document.querySelector("#heaterOff");
 let helper1 = 0;
 let helper2 = 0;
+let ballcount = document.querySelector("#ballcount");
+ let bc = document.querySelector('#bc');
+ let savedballcount = 600;
