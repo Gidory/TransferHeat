@@ -201,12 +201,14 @@ function turnedoff1(){
     if (helper1%2==1){
         heaterOff.innerText="Увімкнути обігрівача";
         errors.push("Turned off the heater");
+        timestamps.push(Date.now());
         heateroff = true;
         }
     if(helper1%2==0){
         heateroff = false;
         heaterOff.innerText="Вимкнути обігрівача";
         errors.push("Turned on the heater");
+        timestamps.push(Date.now());
     }
 }
 wallsOff.addEventListener("click", turnedoff2);
@@ -215,11 +217,13 @@ function turnedoff2(){
     if (helper2%2==1){
         wallsOff.innerText="Увімкнути тепловтрату стін";
         errors.push("Turned off the heat loss");
+        timestamps.push(Date.now());
         blocked = true;
         }
     if(helper2%2==0){
         blocked = false;
         heaterOff.innerText="Вимкнути тепловтрату стін";
         errors.push("Turned on the heat loss");
+        timestamps.push(Date.now());
     }
 }
