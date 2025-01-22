@@ -222,7 +222,7 @@ function turnedoff2(){
         }
     if(helper2%2==0){
         blocked = false;
-        heaterOff.innerText="Вимкнути тепловтрату стін";
+        wallsOff.innerText="Вимкнути тепловтрату стін";
         errors.push("Turned on the heat loss");
         timestamps.push(Date.now());
     }
