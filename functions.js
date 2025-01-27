@@ -25,6 +25,7 @@ function createthat(ballCount) {
         for (let col = 0; col < Math.floor(columns); col++) {
             let ball = document.createElement("div");
             ball.className = "ball";
+            ball.id = `${row}`+"0"+`${col}`;
 
             // Розташування шарика
             ball.style.width = `${ballSize}px`;
@@ -174,7 +175,7 @@ function transferHeat() {
         }
 
         // Оновлення кольорів стін
-    }, 100); // Інтервал оновлення
+    }, ss.value); // Інтервал оновлення
 }
 
 function color(obj,temperature){
@@ -246,4 +247,36 @@ bc.addEventListener('input', function(){
         console.log(errors);
     }
     createthat(bc.value);
+    ballcount.innerText = bc.value + " шариків"
+});
+hp.addEventListener('input', function(){
+    if(forst%2==1){ //stopping the function if value is changed to prevent errors
+        forst++;
+        clearInterval(GHF);
+        starter.innerText="Запустити процес";
+        errors.push("The heat power change caused the operation to stop.");
+        timestamps.push(Date.now());
+        console.log(timestamps);
+        console.log(errors);
+    }
+    heatnumber.innerText = hp.value + " Вт"
+});
+nextpg.addEventListener("click", function(){
+    wallsOff.style.display="none";
+    heaterOff.style.display="none";
+    cont06.style.display="none";
+    nextpg.style.display="none";
+    cont07.style.display="block";
+});
+ss.addEventListener('input', function(){
+    if(forst%2==1){ //stopping the function if value is changed to prevent errors
+        forst++;
+        clearInterval(GHF);
+        starter.innerText="Запустити процес";
+        errors.push("The simulation speed change caused the operation to stop.");
+        timestamps.push(Date.now());
+        console.log(timestamps);
+        console.log(errors);
+    }
+    sc.innerText = "Кожні "+ ss.value + " мс"
 });

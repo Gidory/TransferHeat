@@ -183,9 +183,9 @@ function RETURNTOZERO(){
 tb.addEventListener("click", function(){ //open the setting
     toolbox.style.display="flex";
     infop.style.display="none";
-
+    wallsOff.style.display="block";
+    heaterOff.style.display="block";
+    cont06.style.display="block";
+    nextpg.style.display="block";
+    cont07.style.display="none";
 });
-setInterval(function(){
- heatnumber.innerText = hp.value + "Вт";
- ballcount.innerText = bc.value + " шариків"
-}, 10)
