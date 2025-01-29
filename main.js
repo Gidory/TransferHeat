@@ -70,6 +70,7 @@ function constiintch(){  //checking hp value for any unpredicted values
 openthelog.addEventListener("click", logopened); //open the log
 function logopened(){
         infop.style.display="none";
+        infop2.style.display = "none";
         room.style.display="none";
         errorlog.style.display="block";
         if (forst%2==1){
@@ -172,20 +173,10 @@ function logopened(){
         
 }
 returntozero.addEventListener("click", RETURNTOZERO); //close the logs or setting of the simulation
-returntozero1.addEventListener("click", RETURNTOZERO); //the same
 function RETURNTOZERO(){
         infop.style.display="flex";
         room.style.display="block";
         errorlog.style.display="none";
-        toolbox.style.display = "none";
+        infop2.style.display = "flex";
         
 }
-tb.addEventListener("click", function(){ //open the setting
-    toolbox.style.display="flex";
-    infop.style.display="none";
-    wallsOff.style.display="block";
-    heaterOff.style.display="block";
-    cont06.style.display="block";
-    nextpg.style.display="block";
-    cont07.style.display="none";
-});

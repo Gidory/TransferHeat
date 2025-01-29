@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;    
 }
 
 body {
@@ -181,25 +182,10 @@ h2 {
     border: 2px solid #c0392b;
     border-radius: 8px;
     cursor: pointer;
+    user-select: none;
     transition: background-color 0.3s, transform 0.3s;
     transition-duration: 0.3s;
 }
-#leavelog1 {
-    position: relative;
-    padding: 10px;
-    width: 100px;
-    height: 40px;
-    background-color: #e74c3c;
-    color: #fff;
-    font-weight: bold;
-    text-align: center;
-    border: 2px solid #c0392b;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    transition-duration: 0.3s;
-}
-
 #leavelog:hover {
     background-color: #c0392b;
 }
@@ -249,14 +235,12 @@ h2 {
     user-select: none;
 }
 .tbitems{
-    width: 300px;
+    width: 200px;
 }
 #cont06{
-    position: absolute;
-    left: 320px;
-    width: 250px;
     padding: 10px;
     margin-top: 10px;
+    width: 250px;
     height: 150px;
     font-size: 1rem;
     font-family: 'Arial', sans-serif;
@@ -266,9 +250,6 @@ h2 {
     transition: border-color 0.3s;
 }
 #cont07{
-    display: none;
-    position: absolute;
-    left: 320px;
     width: 250px;
     padding: 10px;
     margin-top: 10px;
@@ -326,4 +307,62 @@ h2 {
 #ss:focus {
     border-color: #74ebd5;
     outline: none;
+}
+#infopanel2 {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    width: 300px;
+    height: 650px;
+    position: absolute;
+    top: 100px;
+    left: 150px;
+    background-color: #fff;
+    border: 3px solid #444;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#infopanel2 h2 {
+    color: #555;
+    margin-bottom: 10px;
+}
+.checkdiver{
+    position: relative;
+    width: 100px;
+    height: 50px;
+    border-radius: 100px;
+    background-color: #243743;
+    transition: 0.3s;
+}
+.checkbox{
+    --width: 100px;
+    --height: 50px;
+    cursor: pointer;
+}
+.checkbox:hover{
+    filter: brightness(1.2);
+}
+.checkboxer{
+    display: none;
+}
+.checkdiver::before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    left: 10px;
+    width: 35px;
+    height: 35px;
+    background-color: #28b78d;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+.checkboxer:checked ~ .checkdiver{
+    background-color: #28b78d;
+}
+.checkboxer:checked ~ .checkdiver::before {
+    background-color: #243743;
+    left: calc(var(--width) - var(--height));
 }

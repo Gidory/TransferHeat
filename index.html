@@ -11,20 +11,6 @@
         <div id="leavelog" class="txt">Return</div>
         <div id="logger"></div>
     </div>
-    <div id="toolbox">
-        <div id="wallsOff" class="txt tbitems">Вимкнути тепловтрату стін</div>
-        <div id="heaterOff" class="txt tbitems">Вимкнути обігрівача</div>
-        <div id="cont06">
-            Кількість шариків<input type="range" id="bc" name="b" min="500" max="1000" step="10" value="600">
-            <h2 id="ballcount"> 600 шариків</h1>
-            </div>
-            <div id="cont07">
-                Швидкість симуляції<input type="range" id="ss" name="c" min="100" max="1000" step="10" value="300">
-                <h2 id="speedcount">Кожні 300 мс</h1>
-            </div>
-        <div id="leavelog1" class="txt">Return</div>
-        <div id="nextpg" class="txt">Next&#8594;</div>
-    </div>
     <div id="room">
         <!--обігрівач-->
         <div id="heater"></div>
@@ -48,8 +34,29 @@
          Сила обігрівача<input type="range" id="hp" name="a" min="0" max="5000" step="10" value="100">
          <h2 id="heatnumber"> 100 Вт</h1>
          </div>
-    <div class="txt" id="toolbag">Налаштування симуляції</div>
      <div class="txt" id="openthelog">Logs</div>
+    </div>
+    <div id="infopanel2">
+        <h2 style="color: blueviolet;">Панель керування</h2>
+        <h2 style="color: blue">Додаткові параметри симуляції</h2>
+        <h2 style="color: red">Вимкнути/ввімкнути тепловтрату стін</h2>
+        <label class="checkbox">
+            <input id="wallsOff" type="checkbox" class="checkboxer" checked="true">
+            <div class="checkdiver"></div>    
+        </label>
+        <h2 style="color: red">Вимкнути/ввімкнути обігрівача</h2>
+        <label class="checkbox">
+            <input id="heaterOff" type="checkbox" class="checkboxer" checked="true">
+            <div class="checkdiver"></div>    
+        </label>
+        <div id="cont06">
+            Кількість шариків<input type="range" id="bc" name="b" min="500" max="1000" step="10" value="600">
+            <h2 id="ballcount"> 600 шариків</h1>
+            </div>
+            <div id="cont07">
+                Швидкість симуляції<input type="range" id="ss" name="c" min="100" max="1000" step="10" value="300">
+                <h2 id="speedcount">Кожні 300 мс</h1>
+            </div>
     </div>
     <script src="changeables.js"></script>
     <script src="functions.js"></script>

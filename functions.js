@@ -261,13 +261,6 @@ hp.addEventListener('input', function(){
     }
     heatnumber.innerText = hp.value + " Вт"
 });
-nextpg.addEventListener("click", function(){
-    wallsOff.style.display="none";
-    heaterOff.style.display="none";
-    cont06.style.display="none";
-    nextpg.style.display="none";
-    cont07.style.display="block";
-});
 ss.addEventListener('input', function(){
     if(forst%2==1){ //stopping the function if value is changed to prevent errors
         forst++;
