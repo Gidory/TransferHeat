@@ -51,3 +51,5 @@ let ballcount = document.querySelector("#ballcount");
  let ss = document.querySelector("#ss");
  let sc = document.querySelector("#speedcount");
  let infop2 = document.querySelector('#infopanel2');
+ let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");

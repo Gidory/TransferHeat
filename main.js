@@ -180,3 +180,5 @@ function RETURNTOZERO(){
         infop2.style.display = "flex";
         
 }
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
